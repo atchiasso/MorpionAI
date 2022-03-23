@@ -1,0 +1,19 @@
+Tirage au sort -> Joueur x joue en premier
+	1.1 Joueur X tiré au sort joue en premier avec les croix
+	1.2 Joueur X tiré au sort joue en premier avec les ronds
+
+Création plateau de jeu (tableau de 3x3)
+
+Boucle 
+	Joueur Croix place une croix
+	Vérifier si Joueur Croix ont gagné
+		Si Joueur Croix a gagné
+			Fin de partie
+	Vérifier si plateau de jeu est plein
+		Fin de partie
+	Joueur Rond place un rond
+	Vérifier si Joueur Rond ont gagné
+		Si Joueur Rond a gagné
+			Fin de partie
+	Vérifier si plateau de jeu est plein
+		Fin de partie
