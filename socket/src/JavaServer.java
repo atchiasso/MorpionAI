@@ -27,7 +27,7 @@ class JavaServer {
                 }
                 else
                 {
-                    System.out.println( "RECIEVED:" + fromclient );
+                    System.out.println( "RECEIVED:" + fromclient );
                 }
             }
         }

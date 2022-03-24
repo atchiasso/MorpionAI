@@ -1,14 +1,16 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Morpion {
 
-    static Joueur joueur1 = new Joueur();
-    static Joueur joueur2 = new Joueur();
-    static Scanner in = new Scanner(System.in);
-    static PlateauDeJeu plateau = new PlateauDeJeu();
-    static boolean partyFinish = false;
+    private static Joueur joueur1 = new Joueur();
+    private static Joueur joueur2 = new Joueur();
+    private static Scanner in = new Scanner(System.in);
+    private static PlateauDeJeu plateau = new PlateauDeJeu();
+    private static boolean partyFinish = false;
+    private static RemoteCommand commandAI;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         // Tirage au sort
         String[] symbols = {"X" , "O"};
@@ -19,6 +21,8 @@ public class Morpion {
         joueur2.setSymbol("O");
         System.out.println(symbols[randomIndex]);
         System.out.println(symbols[(randomIndex+1) % 2]);
+
+        commandAI.initializeServer();
 
         while(!partyFinish) {
             if(joueur1.getSymbol().equalsIgnoreCase("X")) {
@@ -37,6 +41,8 @@ public class Morpion {
                 }
                 //Verifier si le joueur1 a gagné ou si le plateau est plein
                 System.out.println(plateau.toString());
+                commandAI.sentPlateauToAI(plateau);
+
                 int x = Integer.parseInt(tokens[0]);
                 int y = Integer.parseInt(tokens[1]);
                 if(plateau.win(x,y)) {
@@ -49,16 +55,19 @@ public class Morpion {
                 }
 
                 System.out.println("Joueur 2, choissisez vos coordonnées (ex: 1,2) : \n");
-                symbolJoueur = in.next();
+                //symbolJoueur = in.next();
+                symbolJoueur = commandAI.receiptDataFromAI();
                 tokens = symbolJoueur.split(",");
                 while(tokens.length != 2) {
                     System.out.println("fait un effort... (EXEMPLEEEEEE : 1,2) : \n");
-                    symbolJoueur = in.next();
+                    //symbolJoueur = in.next();
+                    symbolJoueur = commandAI.receiptDataFromAI();
                     tokens = symbolJoueur.split(",");
                 }
                 while(!plateau.addSymbol(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]), "O")) {
                     System.out.println("Joueur 2 , choissisez vos coordonnées (ex: 1,2) : \n");
-                    symbolJoueur = in.next();
+                    //symbolJoueur = in.next();
+                    symbolJoueur = commandAI.receiptDataFromAI();
                     tokens = symbolJoueur.split(",");
                 }
                 //Verifier si le joueur2 a gagné ou si le plateau est plein
