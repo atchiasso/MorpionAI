@@ -14,10 +14,12 @@ public class RemoteCommand {
             server = new ServerSocket(port);
             System.out.println ("Serveur en attente du client sur le port 2321");
 
+            client = server.accept();
             while(client == null) {
-                Socket client = server.accept();
-                System.out.println( "Le client"+" "+ client.getInetAddress() +":"+client.getPort()+"est connecté");
+                client = server.accept();
+                System.out.println( "Le client n'est pas connecté");
             }
+            System.out.println( "Le client"+" "+ client.getInetAddress() +":"+client.getPort()+" est connecté");
         }
         catch (IOException e) {
             System.out.println(e);
@@ -25,7 +27,6 @@ public class RemoteCommand {
     }
 
     public boolean sentPlateauToAI(PlateauDeJeu plateau) throws IOException {
-
         try {
             OutputStream outstream = client.getOutputStream();
             PrintWriter out = new PrintWriter(outstream);
@@ -40,7 +41,7 @@ public class RemoteCommand {
     }
 
     public String receiptDataFromAI() throws IOException {
-        BufferedReader inFromClient = new BufferedReader(new InputStreamReader (client.getInputStream()));
+        BufferedReader inFromClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
         String receivedData = "";
         while(fromClient == null) {
             fromClient = inFromClient.readLine();
