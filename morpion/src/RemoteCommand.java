@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class RemoteCommand {
 
@@ -46,7 +47,8 @@ public class RemoteCommand {
         while(fromClient == null) {
             fromClient = inFromClient.readLine();
         }
-        receivedData = fromClient;
+
+        receivedData = fromClient.substring(0,3);
         fromClient = null;
         System.out.println(receivedData);
         return receivedData;
